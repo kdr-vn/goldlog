@@ -307,7 +307,11 @@
 
 
 <script>
-
+// Geri tuşuna veya sayfa kapatmaya karşı koruma
+window.onbeforeunload = function() {
+    return "Çıkmak istediğinize emin misiniz? Kaydedilmemiş verileriniz olabilir.";
+};
+	
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwQckK2YdT7mkQ1iFKzAxVWYFfvhnQ2NIU7jKUNJeqKxn64pXEsAulPUuSfu_BYnehC/exec';
 
     let musteriler = JSON.parse(localStorage.getItem('kuyumcu_veriler')) || [];
@@ -682,12 +686,20 @@ function arsivdenGeriAl(index) {
 
 // Sayfa ilk açıldığında arşivleri de yükle
 
-window.onload = function() {
-
+window.onload = async function() {
+    // Google'dan verileri getir
+    try {
+        const response = await fetch(scriptURL);
+        const bulutVerileri = await response.json();
+        if (bulutVerileri && bulutVerileri.length > 0) {
+            musteriler = bulutVerileri;
+        }
+    } catch (e) {
+        console.log("Bulut verisi yüklenemedi, yerel hafıza kullanılıyor.");
+    }
+    
     listele();
-
-    arsivListele();
-
+    if(typeof arsivListele === "function") arsivListele();
 };
 
 </script>
