@@ -1,5 +1,4 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -52,8 +51,6 @@
 
 <div class="container" id="mainContent">
     <div id="yedekBilgi" class="yedek-durum"></div>
-    <div id="yedekBilgi" style="text-align: center; font-weight: bold; height: 20px; margin-bottom: 10px; color: #27ae60;"></div>
-    
     <div class="ozet-panel">
         <div class="ozet-kutu">
             <h3>Toplam Emanetler</h3>
@@ -92,13 +89,45 @@
         </thead>
         <tbody id="tabloGövde"></tbody>
     </table>
+	<hr style="margin: 20px 0; border: 1px solid #ddd;">
+<h3 style="color: var(--altin); text-align: center;">Arşivlenen Müşteriler</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Müşteri Adı</th>
+            <th>Bakiye Durumu</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody id="arsivGövde"></tbody>
+</table>
 </div>
 
-<div class="footer-reklam">
-    <div style="color: var(--altin); font-size: 16px; font-weight: bold; margin-bottom: 5px;">🚀 Yazılım Destek & Dijital Çözümler</div>
-    <div style="font-size: 14px; color: #2c3e50;">Geliştirici: <strong>Kader Ataman</strong></div>
-    <a href="tel:05458037418" style="text-decoration: none; color: #25d366; font-weight: bold; font-size: 15px;">📞 0545 803 74 18</a>
+ <div class="footer-reklam">
+ <div style="margin-top: 30px; padding: 20px; background: #fff; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <div style="color: #d4af37; font-size: 18px; font-weight: bold; margin-bottom: 10px;">
+        🚀 Bu Sistem Sizin İçin Özel Hazırlandı
+    </div>
+    <p style="color: #555; font-size: 14px; margin: 5px 0;">
+        Kuyumcu Cari Takip Yazılımları & Dijital Çözümler
+    </p>
+    
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+        <span style="font-size: 14px; color: #2c3e50;">Geliştirici: <strong>Kader Ataman</strong></span>
+        <a href="tel:05458037418" style="text-decoration: none; color: #25d366; font-weight: bold; font-size: 16px;">
+            📞 İletişim: 0545 803 74 18
+        </a>
+    </div>
+
+    <div style="margin-top: 15px; font-size: 11px; color: #999; letter-spacing: 1px;">
+        © 2026 KADER ATAMAN | TÜM HAKLARI SAKLIDIR
+    </div>
 </div>
+    
+</div>
+
 
 <div class="modal" id="kayitModal">
     <h3 id="modalBaslik">Yeni İşlem</h3>
@@ -162,51 +191,50 @@
     }
 
     function listele() {
-        const gobde = document.getElementById('tabloGövde');
-        const ara = document.getElementById('aramaKutusu').value.toLowerCase();
-        gobde.innerHTML = "";
-        let gEmanet = {}, gBorc = {}, aktifSayi = 0;
+    const gobde = document.getElementById('tabloGövde');
+    const ara = document.getElementById('aramaKutusu').value.toLowerCase();
+    gobde.innerHTML = "";
+    let gEmanet = {}, gBorc = {}, aktifSayi = 0;
 
-        musteriler.forEach((m, index) => {
-            if(!m.ad.toLowerCase().includes(ara)) return;
-            aktifSayi++;
-            let bakiye = {};
-            m.islemler.forEach(is => {
-                let miktar = parseFloat(is.miktar) * (is.yon === "eksi" ? -1 : 1);
-                bakiye[is.birim] = (bakiye[is.birim] || 0) + miktar;
-                if(is.tur === "Emanet") gEmanet[is.birim] = (gEmanet[is.birim] || 0) + miktar;
-                else gBorc[is.birim] = (gBorc[is.birim] || 0) + miktar;
-                
-            });
-            function arsivle(index) {
-    if(confirm(musteriler[index].ad + " isimli müşteriyi arşivlemek (listeden kaldırmak) istiyor musunuz?")) {
-        musteriler.splice(index, 1); // Listeden çıkar
-        listele(); // Tabloyu tazele
-        googleYedekle(); // Google'a yeni halini gönder
-    }
-            }
-            
+    // ALFABETİK SIRALAMA: Müşterileri isme göre A-Z sıralar
+    musteriler.sort((a, b) => a.ad.localeCompare(b.ad, 'tr'));
 
-            let bakiyeHtml = "";
-            for(let b in bakiye) if(Math.abs(bakiye[b]) > 0.001) 
-                bakiyeHtml += `<span class="badge ${b === 'TL' ? 'bg-borc' : 'bg-emanet'}">${bakiye[b]} ${b}</span>`;
-
-            gobde.innerHTML += `<tr>
-                <td onclick="detayAc(${index})" style="font-weight:bold; cursor:pointer">${m.ad} 👁️</td>
-                <td>${bakiyeHtml || '<small>Kapalı</small>'}</td>
-                <td><button class="btn-wp" onclick="wpGonder(${index})">Gönder</button></td>
-            </tr>`;
+    musteriler.forEach((m, index) => {
+        if(!m.ad.toLowerCase().includes(ara)) return;
+        aktifSayi++;
+        let bakiye = {};
+        m.islemler.forEach(is => {
+            let miktar = parseFloat(is.miktar) * (is.yon === "eksi" ? -1 : 1);
+            bakiye[is.birim] = (bakiye[is.birim] || 0) + miktar;
+            if(is.tur === "Emanet") gEmanet[is.birim] = (gEmanet[is.birim] || 0) + miktar;
+            else gBorc[is.birim] = (gBorc[is.birim] || 0) + miktar;
         });
 
-        const yaz = (obj, id) => {
-            let h = "";
-            for(let b in obj) if(Math.abs(obj[b]) > 0.001) h += `<div>${obj[b]}<span class="birim-etiket">${b}</span></div>`;
-            document.getElementById(id).innerHTML = h || "Yok";
-        };
-        yaz(gEmanet, 'emanetDetayListe'); yaz(gBorc, 'borcDetayListe');
-        document.getElementById('musteriSayisi').innerText = aktifSayi;
-        localStorage.setItem('kuyumcu_veriler', JSON.stringify(musteriler));
-    }
+        let bakiyeHtml = "";
+        for(let b in bakiye) if(Math.abs(bakiye[b]) > 0.001) 
+            bakiyeHtml += `<span class="badge ${b === 'TL' ? 'bg-borc' : 'bg-emanet'}">${bakiye[b]} ${b}</span>`;
+
+        // TABLO SATIRI: Arşivle butonu dahil
+        gobde.innerHTML += `<tr>
+            <td onclick="detayAc(${index})" style="font-weight:bold; cursor:pointer">${m.ad} 👁️</td>
+            <td>${bakiyeHtml || '<small>Kapalı</small>'}</td>
+            <td>
+                <button class="btn-wp" onclick="wpGonder(${index})">Gönder</button>
+                <button class="btn-wp" style="background:#666; margin-left:5px;" onclick="arsivle(${index})">Arşivle</button>
+            </td>
+        </tr>`;
+    });
+
+    const yaz = (obj, id) => {
+        let h = "";
+        for(let b in obj) if(Math.abs(obj[b]) > 0.001) h += `<div>${obj[b]}<span class="birim-etiket">${b}</span></div>`;
+        document.getElementById(id).innerHTML = h || "Yok";
+    };
+    yaz(gEmanet, 'emanetDetayListe'); yaz(gBorc, 'borcDetayListe');
+    document.getElementById('musteriSayisi').innerText = aktifSayi;
+    localStorage.setItem('kuyumcu_veriler', JSON.stringify(musteriler));
+}
+
 
     function formuAc(tur) {
         suankiTur = tur;
@@ -249,7 +277,73 @@
         gorevler.forEach((g, i) => { l.innerHTML += `<li>${g} <span style="color:red; cursor:pointer" onclick="gorevSil(${i})"> [x]</span></li>`; });
         localStorage.setItem('kuyumcu_gorevler', JSON.stringify(gorevler));
     }
+	
+	function arsivle(index) {
+    let m = musteriler[index];
+    if(confirm(m.ad + " isimli müşteriyi arşive taşımak istiyor musunuz?")) {
+        // Arşiv verilerini al veya yeni oluştur
+        let arsivListesi = JSON.parse(localStorage.getItem('arsivlenmis_veriler')) || [];
+        
+        // Müşteriyi arşive ekle
+        arsivListesi.push(m);
+        localStorage.setItem('arsivlenmis_veriler', JSON.stringify(arsivListesi));
+
+        // Ana listeden sil ve güncelle
+        musteriler.splice(index, 1);
+        listele();
+        arsivListele(); // Arşiv tablosunu tazele
+        googleYedekle();
+        alert("Müşteri arşivlendi.");
+    }
+}
+
+function arsivListele() {
+    const arsivGobde = document.getElementById('arsivGövde');
+    let arsivListesi = JSON.parse(localStorage.getItem('arsivlenmis_veriler')) || [];
+    arsivGobde.innerHTML = "";
+
+    // Arşivdekileri de isme göre sırala
+    arsivListesi.sort((a, b) => a.ad.localeCompare(b.ad, 'tr'));
+
+    arsivListesi.forEach((m, index) => {
+        let bakiye = {};
+        m.islemler.forEach(is => {
+            let miktar = parseFloat(is.miktar) * (is.yon === "eksi" ? -1 : 1);
+            bakiye[is.birim] = (bakiye[is.birim] || 0) + miktar;
+        });
+
+        let bakiyeHtml = "";
+        for(let b in bakiye) if(Math.abs(bakiye[b]) > 0.001) 
+            bakiyeHtml += `<span class="badge ${b === 'TL' ? 'bg-borc' : 'bg-emanet'}">${bakiye[b]} ${b}</span>`;
+
+        arsivGobde.innerHTML += `<tr>
+            <td style="color: #666;">${m.ad} (Arşiv)</td>
+            <td>${bakiyeHtml || '<small>Kapalı</small>'}</td>
+            <td>
+                <button class="btn-wp" style="background:#27ae60;" onclick="arsivdenGeriAl(${index})">Geri Al</button>
+            </td>
+        </tr>`;
+    });
+}
+
+// Arşivden yanlışlıkla çıkarılanı geri ana listeye taşır
+function arsivdenGeriAl(index) {
+    let arsivListesi = JSON.parse(localStorage.getItem('arsivlenmis_veriler')) || [];
+    let m = arsivListesi.splice(index, 1)[0];
+    
+    musteriler.push(m);
+    localStorage.setItem('arsivlenmis_veriler', JSON.stringify(arsivListesi));
+    
+    listele();
+    arsivListele();
+    googleYedekle();
+}
+
+// Sayfa ilk açıldığında arşivleri de yükle
+window.onload = function() {
+    listele();
+    arsivListele();
+};
 </script>
 </body>
 </html>
-             
