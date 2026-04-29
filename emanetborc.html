@@ -52,6 +52,8 @@
 
 <div class="container" id="mainContent">
     <div id="yedekBilgi" class="yedek-durum"></div>
+    <div id="yedekBilgi" style="text-align: center; font-weight: bold; height: 20px; margin-bottom: 10px; color: #27ae60;"></div>
+    
     <div class="ozet-panel">
         <div class="ozet-kutu">
             <h3>Toplam Emanetler</h3>
@@ -174,7 +176,16 @@
                 bakiye[is.birim] = (bakiye[is.birim] || 0) + miktar;
                 if(is.tur === "Emanet") gEmanet[is.birim] = (gEmanet[is.birim] || 0) + miktar;
                 else gBorc[is.birim] = (gBorc[is.birim] || 0) + miktar;
+                
             });
+            function arsivle(index) {
+    if(confirm(musteriler[index].ad + " isimli müşteriyi arşivlemek (listeden kaldırmak) istiyor musunuz?")) {
+        musteriler.splice(index, 1); // Listeden çıkar
+        listele(); // Tabloyu tazele
+        googleYedekle(); // Google'a yeni halini gönder
+    }
+            }
+            
 
             let bakiyeHtml = "";
             for(let b in bakiye) if(Math.abs(bakiye[b]) > 0.001) 
