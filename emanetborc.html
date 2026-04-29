@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -8,18 +9,14 @@
         :root { --altin: #d4af37; --koyu: #1a252f; --yesil: #27ae60; --kirmizi: #e74c3c; --gri: #f8f9fa; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--koyu); margin: 0; padding: 10px; color: #333; }
         
-        /* GİRİŞ EKRANI */
         #loginWrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--koyu); z-index: 9999; display: flex; justify-content: center; align-items: center; }
         .login-card { background: white; padding: 30px; border-radius: 15px; text-align: center; width: 85%; max-width: 320px; border-top: 5px solid var(--altin); }
-        .login-card h2 { color: var(--koyu); margin-top: 0; font-size: 20px; }
         .login-card input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 18px; text-align: center; box-sizing: border-box; }
 
-        /* ANA KONTEYNER */
         .container { max-width: 600px; margin: auto; background: var(--gri); padding: 15px; border-radius: 15px; display: none; min-height: 90vh; }
         .header { text-align: center; margin-bottom: 15px; border-bottom: 2px solid var(--altin); padding-bottom: 10px; }
         .header h1 { color: var(--koyu); margin: 0; font-size: 20px; text-transform: uppercase; }
 
-        /* İSTATİSTİK PANELİ */
         .istatistik-bar { display: flex; gap: 8px; margin-bottom: 15px; }
         .ist-kutu { flex: 1; background: white; padding: 10px 5px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .ist-kutu div { font-size: 10px; color: #666; text-transform: uppercase; font-weight: bold; }
@@ -32,23 +29,20 @@
         .btn-emanet { background: var(--yesil); }
         .btn-borc { background: var(--kirmizi); }
 
-        /* TABLO */
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
         th { background: #eee; padding: 10px; text-align: left; font-size: 12px; }
         td { padding: 12px 10px; border-bottom: 1px solid #eee; font-size: 14px; }
-        .bakiye-emanet { color: var(--yesil); font-weight: bold; font-size: 13px; }
-        .bakiye-borc { color: var(--kirmizi); font-weight: bold; font-size: 13px; }
+        .bakiye-emanet { color: var(--yesil); font-weight: bold; }
+        .bakiye-borc { color: var(--kirmizi); font-weight: bold; }
         .btn-aksiyon { border: none; background: none; font-size: 20px; cursor: pointer; padding: 5px; }
 
-        /* MODALLAR */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
         .modal-icerik { background: white; width: 85%; max-width: 380px; margin: 20% auto; padding: 20px; border-radius: 12px; position: relative; }
-        .modal-icerik input, .modal-icerik select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
+        .modal-icerik input, .modal-icerik select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
         .kapat-btn { position: absolute; right: 15px; top: 10px; font-size: 28px; cursor: pointer; color: #999; }
 
-        /* KARTVİZİT & YEDEK DURUMU */
         .footer { text-align: center; margin-top: 20px; padding: 10px; font-size: 11px; color: #7f8c8d; }
-        .yedek-durum { text-align: center; font-size: 10px; color: var(--yesil); font-weight: bold; margin-top: 5px; height: 15px; }
+        .yedek-durum { text-align: center; font-size: 11px; color: var(--yesil); font-weight: bold; height: 20px; }
         .history-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 12px; }
     </style>
 </head>
@@ -58,7 +52,7 @@
     <div class="login-card">
         <h1 style="font-size:18px; margin:0; color:var(--altin)">ZEKİ ADIGÜZEL</h1>
         <p style="margin:0; font-size:12px; color:#666">KUYUMCULUK</p>
-        <input type="password" id="passInput" placeholder="Sistem Şifresi" inputmode="numeric">
+        <input type="password" id="passInput" placeholder="Şifre" inputmode="numeric">
         <button class="btn btn-emanet" style="width:100%" onclick="checkLogin()">GİRİŞ YAP</button>
     </div>
 </div>
@@ -76,7 +70,7 @@
     </div>
 
     <div class="islem-bar">
-        <input type="text" id="aramaKutusu" placeholder="Müşteri adıyla ara..." onkeyup="listele()">
+        <input type="text" id="aramaKutusu" placeholder="Müşteri ara..." onkeyup="listele()">
         <div class="ana-butonlar">
             <button class="btn btn-emanet" onclick="formuAc('Emanet')">+ EMANET EKLE</button>
             <button class="btn btn-borc" onclick="formuAc('Borç')">+ BORÇ EKLE</button>
@@ -86,8 +80,8 @@
     <table id="liste">
         <thead>
             <tr>
-                <th>Müşteri Bilgisi</th>
-                <th>Güncel Bakiye</th>
+                <th>Müşteri</th>
+                <th>Bakiye</th>
                 <th style="text-align:right">İşlem</th>
             </tr>
         </thead>
@@ -107,9 +101,15 @@
         <input type="text" id="mAd" placeholder="Müşteri Ad Soyad">
         <input type="tel" id="mTel" placeholder="WhatsApp (5xx...)">
         <select id="mBirim">
+            <option value="Ata">Ata</option>
+            <option value="Çeyrek">Çeyrek</option>
+            <option value="Yarım">Yarım</option>
+            <option value="Tam">Tam</option>
             <option value="Gram (24K)">Gram (24K)</option>
             <option value="Gram (22K)">Gram (22K)</option>
-            <option value="Çeyrek">Çeyrek</option>
+            <option value="Eski Çeyrek">Eski Çeyrek</option>
+            <option value="Eski Yarım">Eski Yarım</option>
+            <option value="Eski Tam">Eski Tam</option>
             <option value="TL">TL</option>
         </select>
         <input type="number" id="mMiktar" placeholder="Miktar">
@@ -121,7 +121,7 @@
     <div class="modal-icerik">
         <span class="kapat-btn" onclick="modalKapat()">&times;</span>
         <h3 id="gozBaslik" style="margin-top:0; color:var(--altin)"></h3>
-        <div id="islemGecmisi" style="max-height: 300px; overflow-y: auto; border-top:1px solid #eee; margin-top:10px;"></div>
+        <div id="islemGecmisi" style="max-height: 300px; overflow-y: auto;"></div>
         <button class="btn btn-borc" style="width:100%; margin-top:15px;" onclick="musteriSil()">MÜŞTERİ KAYDINI SİL</button>
     </div>
 </div>
@@ -142,19 +142,38 @@
 
     async function googleYedekle() {
         const ydk = document.getElementById('yedekBilgi');
-        ydk.innerText = "Buluta Yedekleniyor...";
+        ydk.innerText = "☁️ Google E-Tablo Güncelleniyor...";
+        
+        // Veriyi Sütunlu Formata Çevir
+        const tabloVerisi = musteriler.map(m => {
+            let row = { "Müşteri": m.ad, "Telefon": m.tel };
+            // Başlıkları borç/emanet ayrımıyla oluştur
+            const birimler = ["Ata", "Çeyrek", "Yarım", "Tam", "Gram (24K)", "Gram (22K)", "Eski Çeyrek", "Eski Yarım", "Eski Tam", "TL"];
+            birimler.forEach(b => {
+                let emanetToplam = 0, borcToplam = 0;
+                m.islemler.forEach(is => {
+                    if(is.birim === b) {
+                        if(is.tur === "Emanet") emanetToplam += parseFloat(is.miktar);
+                        else borcToplam += parseFloat(is.miktar);
+                    }
+                });
+                row[b + " (Emanet)"] = emanetToplam || 0;
+                row[b + " (Borç)"] = borcToplam || 0;
+            });
+            return row;
+        });
+
         try {
-            await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(musteriler) });
-            ydk.innerText = "Google E-Tablo Güncellendi ✓";
+            await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(tabloVerisi) });
+            ydk.innerText = "✅ Google E-Tablo'ya İşlendi";
             setTimeout(() => { ydk.innerText = ""; }, 3000);
-        } catch (e) { ydk.innerText = "İnternet Hatası: Yedeklenemedi"; }
+        } catch (e) { ydk.innerText = "❌ Yedekleme Hatası!"; }
     }
 
     function listele() {
         const gobde = document.getElementById('tabloGövde');
         const ara = document.getElementById('aramaKutusu').value.toLowerCase();
         gobde.innerHTML = "";
-        
         let tMusteri = 0, tEmanet = 0, tBorc = 0;
 
         musteriler.forEach((m, index) => {
@@ -178,13 +197,12 @@
             gobde.innerHTML += `<tr>
                 <td><strong>${m.ad}</strong></td>
                 <td>${bakiyeHtml || '<span style="color:#999">Kapalı</span>'}</td>
-                <td style="text-align:right; white-space:nowrap">
+                <td style="text-align:right">
                     <button class="btn-aksiyon" onclick="gecmisAc(${index})">👁️</button>
                     <button class="btn-aksiyon" onclick="wpGonder(${index})">📤</button>
                 </td>
             </tr>`;
         });
-        
         document.getElementById('stMusteri').innerText = tMusteri;
         document.getElementById('stEmanet').innerText = tEmanet;
         document.getElementById('stBorc').innerText = tBorc;
@@ -223,35 +241,26 @@
         const tel = document.getElementById('mTel').value.trim();
         const mik = document.getElementById('mMiktar').value;
         const bir = document.getElementById('mBirim').value;
-        
-        if(!ad || !mik) return alert("Eksik bilgi girmeyin!");
+        if(!ad || !mik) return alert("Eksik bilgi!");
         
         let i = musteriler.findIndex(m => m.ad.toLowerCase() === ad.toLowerCase());
         const yeniIslem = { tarih: new Date().toLocaleDateString('tr-TR'), tur: suankiIslemTuru, miktar: mik, birim: bir };
         
-        if(i > -1) { 
-            musteriler[i].islemler.push(yeniIslem); 
-            if(tel) musteriler[i].tel = tel;
-        } else { 
-            musteriler.push({ ad, tel, islemler: [yeniIslem] }); 
-            i = musteriler.length - 1;
-        }
+        if(i > -1) { musteriler[i].islemler.push(yeniIslem); if(tel) musteriler[i].tel = tel; }
+        else { musteriler.push({ ad, tel, islemler: [yeniIslem] }); i = musteriler.length - 1; }
         
         listele(); modalKapat(); googleYedekle(); wpGonder(i);
         document.getElementById('mAd').value = ""; document.getElementById('mMiktar').value = "";
     }
 
     function musteriSil() {
-        if(confirm("Müşteriyi silmek üzeresiniz. Emin misiniz?")) {
-            musteriler.splice(seciliMusteriIndex, 1);
-            listele(); modalKapat(); googleYedekle();
-        }
+        if(confirm("Emin misiniz?")) { musteriler.splice(seciliMusteriIndex, 1); listele(); modalKapat(); googleYedekle(); }
     }
 
     function wpGonder(index) {
-        const m = musteriler[index]; if(!m.tel) return alert("WhatsApp no eksik!");
+        const m = musteriler[index]; if(!m.tel) return;
         const s = m.islemler[m.islemler.length - 1];
-        const msg = `*Zeki Adıgüzel Kuyumculuk*\n\nSayın *${m.ad}*,\n${s.tarih} tarihinde hesabınıza *${s.miktar} ${s.birim} ${s.tur}* kaydı eklenmiştir.\n\nHayırlı işler dileriz.`;
+        const msg = `*Zeki Adıgüzel Kuyumculuk*\n\nSayın *${m.ad}*,\n${s.tarih} tarihinde hesabınıza *${s.miktar} ${s.birim} ${s.tur}* kaydı eklenmiştir.`;
         let t = m.tel.replace(/\D/g, ''); if(t.startsWith('5')) t = '90'+t;
         window.open("https://wa.me/"+t+"?text="+encodeURIComponent(msg), '_blank');
     }
