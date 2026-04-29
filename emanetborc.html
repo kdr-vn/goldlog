@@ -1,34 +1,46 @@
-<!DOCTYPE html>
+            <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>GoldLog - Cari Takip</title>
+    <title>Zeki Adıgüzel Kuyumculuk - Cari Takip</title>
     <style>
-        :root { --altin: #d4af37; --koyu: #2c3e50; --acik: #f4f4f4; --red: #e74c3c; --green: #27ae60; --mavi: #3498db; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #1a252f; margin: 0; padding: 20px; }
-        #loginWrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(26, 37, 47, 0.95); z-index: 9999; display: flex; justify-content: center; align-items: center; }
-        .login-card { background: white; padding: 30px; border-radius: 15px; text-align: center; width: 300px; border-top: 5px solid var(--altin); }
-        .login-card input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; text-align: center; }
-        .container { max-width: 1100px; margin: auto; background: var(--acik); padding: 20px; border-radius: 12px; display: none; }
-        .ozet-panel { display: flex; gap: 10px; background: var(--koyu); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .ozet-kutu { flex: 1; min-width: 100px; text-align: center; }
-        .ozet-kutu h3 { margin: 0; font-size: 11px; color: var(--altin); text-transform: uppercase; }
-        .detay-liste { font-size: 14px; font-weight: bold; margin-top: 5px; }
-        .islem-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-        .btn-yeni { background: var(--altin); color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; -webkit-appearance: none; }
+        :root { --altin: #d4af37; --koyu: #1a252f; --yesil: #27ae60; --kirmizi: #e74c3c; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--koyu); margin: 0; padding: 15px; color: #333; }
+        
+        #loginWrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--koyu); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .login-card { background: white; padding: 30px; border-radius: 15px; text-align: center; width: 85%; max-width: 320px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .login-card h2 { margin-bottom: 20px; color: var(--koyu); }
+        .login-card input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 18px; text-align: center; box-sizing: border-box; }
+
+        .container { max-width: 600px; margin: auto; background: #f8f9fa; padding: 20px; border-radius: 15px; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid var(--altin); padding-bottom: 10px; }
+        .header h1 { color: var(--koyu); margin: 0; font-size: 22px; }
+
+        .islem-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
         #aramaKutusu { padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; }
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; font-size: 14px; }
-        th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
-        .badge { padding: 4px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; display: inline-block; margin: 2px; }
-        .bg-emanet { background: #e3f2fd; color: #1976d2; }
-        .bg-borc { background: #ffebee; color: #c62828; }
-        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 12px; z-index: 1000; width: 85%; }
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; }
-        .footer-reklam { margin-top: 20px; text-align: center; color: white; font-size: 10px; opacity: 0.7; }
-        .yedek-durum { font-size: 12px; color: var(--green); font-weight: bold; margin-top: 5px; text-align: center; display: none; }
+        .ana-butonlar { display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .btn-emanet { background: var(--yesil); }
+        .btn-borc { background: var(--kirmizi); }
+
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+        th { background: #eee; padding: 12px; text-align: left; font-size: 13px; }
+        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+        
+        .bakiye-emanet { color: var(--yesil); font-weight: bold; }
+        .bakiye-borc { color: var(--kirmizi); font-weight: bold; }
+        
+        .btn-aksiyon { border: none; background: none; font-size: 18px; cursor: pointer; padding: 5px; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; }
+        .modal-icerik { background: white; width: 90%; max-width: 400px; margin: 15% auto; padding: 20px; border-radius: 12px; position: relative; }
+        .modal-icerik input, .modal-icerik select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        
+        .yedek-durum { position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: #aaa; }
+        .kapat-btn { position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; }
+        
+        .history-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -37,58 +49,67 @@
     <div class="login-card">
         <h2>Sistem Girişi</h2>
         <input type="password" id="passInput" placeholder="Şifre" inputmode="numeric">
-        <button class="btn-yeni" style="width:100%" onclick="checkLogin()">GİRİŞ YAP</button>
+        <button class="btn btn-emanet" style="width:100%" onclick="checkLogin()">GİRİŞ YAP</button>
     </div>
 </div>
 
-<div class="overlay" id="overlay" onclick="modalKapat()"></div>
-
 <div class="container" id="mainContent">
-    <div class="ozet-panel">
-        <div class="ozet-kutu"><h3>Emanetler</h3><div id="emanetDetayListe" class="detay-liste">0</div></div>
-        <div class="ozet-kutu"><h3>Borçlar</h3><div id="borcDetayListe" class="detay-liste">0</div></div>
+    <div class="header">
+        <h1>Zeki Adıgüzel Kuyumculuk</h1>
     </div>
 
     <div class="islem-bar">
         <input type="text" id="aramaKutusu" placeholder="Müşteri ara..." onkeyup="listele()">
-        <div id="yedekBilgi" class="yedek-durum">Yedekleniyor...</div>
-        <div style="display:flex; gap:10px;">
-            <button class="btn-yeni" style="flex:1" onclick="formuAc('Emanet')">+ EMANET</button>
-            <button class="btn-yeni" style="flex:1; background:#444;" onclick="formuAc('Borç')">+ BORÇ</button>
+        <div class="ana-butonlar">
+            <button class="btn btn-emanet" onclick="formuAc('Emanet')">+ EMANET EKLE</button>
+            <button class="btn btn-borc" onclick="formuAc('Borç')">+ BORÇ EKLE</button>
         </div>
     </div>
 
     <table id="liste">
-        <thead><tr><th>Müşteri</th><th>Bakiye</th><th>İşlem</th></tr></thead>
+        <thead>
+            <tr>
+                <th>Müşteri</th>
+                <th>Bakiye</th>
+                <th style="text-align:right">WhatsApp</th>
+            </tr>
+        </thead>
         <tbody id="tabloGövde"></tbody>
     </table>
-    
-    <div class="footer-reklam">Geliştirici: Kader Ataman | 2026</div>
+    <div id="yedekBilgi" class="yedek-durum">Sistem Hazır</div>
 </div>
 
-<div class="modal" id="kayitModal">
-    <h3 id="modalBaslik">Yeni İşlem</h3>
-    <input type="text" id="mAd" placeholder="Müşteri Ad Soyad" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
-    <input type="tel" id="mTel" placeholder="Telefon (5xx...)" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
-    <select id="mYön" style="width:100%; padding:10px; margin-bottom:10px;">
-        <option value="artı">Müşteriden Aldım (+)</option>
-        <option value="eksi">Müşteriye Verdim (-)</option>
-    </select>
-    <select id="mBirim" style="width:100%; padding:10px; margin-bottom:10px;">
-        <option value="Gram (24K)">Gram (24K)</option>
-        <option value="Gram (22K)">Gram (22K)</option>
-        <option value="Çeyrek">Çeyrek</option>
-        <option value="TL">TL</option>
-    </select>
-    <input type="number" id="mMiktar" placeholder="Miktar" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
-    <button class="btn-yeni" style="width:100%" onclick="kaydet()">KAYDET VE WP GÖNDER</button>
+<div id="kayitModal" class="modal">
+    <div class="modal-icerik">
+        <span class="kapat-btn" onclick="modalKapat()">&times;</span>
+        <h3 id="modalBaslik">Yeni Kayıt</h3>
+        <input type="text" id="mAd" placeholder="Müşteri Ad Soyad">
+        <input type="tel" id="mTel" placeholder="Telefon (5xx...)">
+        <select id="mBirim">
+            <option value="Gram (24K)">Gram (24K)</option>
+            <option value="Gram (22K)">Gram (22K)</option>
+            <option value="Çeyrek">Çeyrek</option>
+            <option value="TL">TL</option>
+        </select>
+        <input type="number" id="mMiktar" placeholder="Miktar">
+        <button class="btn btn-emanet" style="width:100%; margin-top:10px;" onclick="kaydet()">KAYDET VE GÖNDER</button>
+    </div>
+</div>
+
+<div id="gozModal" class="modal">
+    <div class="modal-icerik">
+        <span class="kapat-btn" onclick="modalKapat()">&times;</span>
+        <h3 id="gozBaslik">İşlem Geçmişi</h3>
+        <div id="islemGecmisi" style="max-height: 300px; overflow-y: auto;"></div>
+        <button class="btn btn-borc" style="width:100%; margin-top:15px;" onclick="musteriSil()">MÜŞTERİYİ SİL</button>
+    </div>
 </div>
 
 <script>
-    // DÜZELTİLMİŞ URL
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzawzdgSEzCpcDmGJiVOKb58bOozhhtI8z_1TlzP5ZTafQXNhmMEB2Xi-iDtBUkjnTc/exec';
-    
     let musteriler = JSON.parse(localStorage.getItem('kuyumcu_veriler')) || [];
+    let seciliMusteriIndex = null;
+    let suankiIslemTuru = "";
 
     function checkLogin() {
         if (document.getElementById('passInput').value === "1234") {
@@ -99,27 +120,11 @@
     }
 
     async function googleYedekle() {
-        const yedekMsg = document.getElementById('yedekBilgi');
-        yedekMsg.style.display = 'block';
-        yedekMsg.innerText = "Yedekleniyor...";
-        yedekMsg.style.color = "orange";
-        
+        document.getElementById('yedekBilgi').innerText = "Buluta Yedekleniyor...";
         try {
-            await fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors', // CORS hatasını engellemek için
-                cache: 'no-cache',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(musteriler)
-            });
-            yedekMsg.innerText = "Google E-Tablo'ya yedeklendi ✓";
-            yedekMsg.style.color = "#27ae60";
-            setTimeout(() => { yedekMsg.style.display = 'none'; }, 4000);
-        } catch (e) {
-            yedekMsg.innerText = "Yedekleme hatası oluştu!";
-            yedekMsg.style.color = "red";
-            console.error("Hata:", e);
-        }
+            await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(musteriler) });
+            document.getElementById('yedekBilgi').innerText = "Veriler Google'a Yedeklendi ✓";
+        } catch (e) { document.getElementById('yedekBilgi').innerText = "Yedekleme Beklemede"; }
     }
 
     function listele() {
@@ -127,71 +132,98 @@
         const ara = document.getElementById('aramaKutusu').value.toLowerCase();
         gobde.innerHTML = "";
         
-        let toplamEmanet = 0;
-        let toplamBorc = 0;
-
         musteriler.forEach((m, index) => {
             if(!m.ad.toLowerCase().includes(ara)) return;
             let bakiye = {};
             m.islemler.forEach(is => {
-                let miktar = parseFloat(is.miktar) * (is.yon === "eksi" ? -1 : 1);
+                let miktar = parseFloat(is.miktar) * (is.tur === "Borç" ? -1 : 1);
                 bakiye[is.birim] = (bakiye[is.birim] || 0) + miktar;
             });
 
             let bakiyeHtml = "";
             for(let b in bakiye) {
-                if(Math.abs(bakiye[b]) > 0.001) {
-                    bakiyeHtml += `<span class="badge ${b === 'TL' ? 'bg-borc' : 'bg-emanet'}">${bakiye[b]} ${b}</span>`;
+                if(Math.abs(bakiye[b]) > 0.0001) {
+                    let renk = bakiye[b] > 0 ? "bakiye-emanet" : "bakiye-borc";
+                    bakiyeHtml += `<div class="${renk}">${bakiye[b]} ${b}</div>`;
                 }
             }
 
             gobde.innerHTML += `<tr>
-                <td style="font-weight:bold">${m.ad}</td>
+                <td><strong>${m.ad}</strong></td>
                 <td>${bakiyeHtml || 'Kapalı'}</td>
-                <td><button onclick="wpGonder(${index})" style="border:none; background:#25d366; color:white; border-radius:4px; padding:5px;">WP</button></td>
+                <td style="text-align:right">
+                    <button class="btn-aksiyon" onclick="gecmisAc(${index})">👁️</button>
+                    <button class="btn-aksiyon" onclick="wpGonder(${index})">📤</button>
+                </td>
             </tr>`;
         });
         localStorage.setItem('kuyumcu_veriler', JSON.stringify(musteriler));
     }
 
     function formuAc(tur) {
-        document.getElementById('modalBaslik').innerText = "Yeni " + tur;
+        suankiIslemTuru = tur;
+        document.getElementById('modalBaslik').innerText = "Yeni " + tur + " Kaydı";
         document.getElementById('kayitModal').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
     }
 
-    function modalKapat() { document.getElementById('kayitModal').style.display='none'; document.getElementById('overlay').style.display='none'; }
+    function gecmisAc(index) {
+        seciliMusteriIndex = index;
+        const m = musteriler[index];
+        document.getElementById('gozBaslik').innerText = m.ad;
+        let html = "";
+        m.islemler.forEach(is => {
+            let renk = is.tur === "Emanet" ? "color:green" : "color:red";
+            html += `<div class="history-item">
+                <span>${is.tarih}</span>
+                <span style="${renk}">${is.tur}: ${is.miktar} ${is.birim}</span>
+            </div>`;
+        });
+        document.getElementById('islemGecmisi').innerHTML = html;
+        document.getElementById('gozModal').style.display = 'block';
+    }
+
+    function modalKapat() { 
+        document.getElementById('kayitModal').style.display='none'; 
+        document.getElementById('gozModal').style.display='none'; 
+    }
 
     function kaydet() {
-        const ad = document.getElementById('mAd').value.trim(), tel = document.getElementById('mTel').value.trim(), 
-              mik = document.getElementById('mMiktar').value, bir = document.getElementById('mBirim').value, yon = document.getElementById('mYön').value;
-        if(!ad || !mik) return alert("Eksik bilgi!");
+        const ad = document.getElementById('mAd').value.trim();
+        const tel = document.getElementById('mTel').value.trim();
+        const mik = document.getElementById('mMiktar').value;
+        const bir = document.getElementById('mBirim').value;
+        
+        if(!ad || !mik) return alert("Lütfen Ad ve Miktar girin!");
         
         let i = musteriler.findIndex(m => m.ad.toLowerCase() === ad.toLowerCase());
-        const yeni = { tarih: new Date().toLocaleDateString('tr-TR'), miktar: mik, birim: bir, yon: yon };
+        const yeniIslem = { tarih: new Date().toLocaleDateString('tr-TR'), tur: suankiIslemTuru, miktar: mik, birim: bir };
         
         if(i > -1) { 
-            musteriler[i].islemler.push(yeni); 
-            if(tel) musteriler[i].tel = tel; 
+            musteriler[i].islemler.push(yeniIslem); 
+            if(tel) musteriler[i].tel = tel;
         } else { 
-            musteriler.push({ ad, tel, islemler: [yeni] }); 
-            i = musteriler.length - 1; 
+            musteriler.push({ ad, tel, islemler: [yeniIslem] }); 
+            i = musteriler.length - 1;
         }
         
-        listele(); 
-        modalKapat(); 
-        googleYedekle(); // Google'a gönder
-        wpGonder(i);
+        listele(); modalKapat(); googleYedekle(); wpGonder(i);
+        document.getElementById('mAd').value = ""; document.getElementById('mMiktar').value = "";
+    }
+
+    function musteriSil() {
+        if(confirm("Bu müşteriyi ve tüm geçmişini silmek istediğinize emin misiniz?")) {
+            musteriler.splice(seciliMusteriIndex, 1);
+            listele(); modalKapat(); googleYedekle();
+        }
     }
 
     function wpGonder(index) {
-        const m = musteriler[index]; if(!m.tel) return;
+        const m = musteriler[index]; if(!m.tel) return alert("Telefon numarası kayıtlı değil!");
         const s = m.islemler[m.islemler.length - 1];
-        const msg = `*Zeki Adıgüzel Kuyumculuk*\n\nSayın *${m.ad}*,\n${s.tarih} tarihinde hesabınıza *${s.miktar} ${s.birim}* işlem kaydı girilmiştir.\n\nHayırlı günler dileriz.`;
+        const msg = `*Zeki Adıgüzel Kuyumculuk*\n\nSayın *${m.ad}*,\n${s.tarih} tarihinde hesabınıza *${s.miktar} ${s.birim} ${s.tur}* kaydı eklenmiştir.\n\nHayırlı işler dileriz.`;
         let t = m.tel.replace(/\D/g, ''); if(t.startsWith('5')) t = '90'+t;
         window.open("https://wa.me/"+t+"?text="+encodeURIComponent(msg), '_blank');
     }
 </script>
 </body>
 </html>
-
